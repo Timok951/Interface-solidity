@@ -1,0 +1,1 @@
+geth --datadir data --networkid 150220241016 --unlock 0xFd386fa8aD5Aeeda63D5b3413936bCdB003e746d --allow-insecure-unlock --http --http.corsdomain="*" --http.api web3,eth,debug,personal,net,miner --miner.etherbase 0xFd386fa8aD5Aeeda63D5b3413936bCdB003e746d

@@ -1,0 +1,66 @@
+{%extends 'base.html'%}
+
+{% block title %}
+    Profile
+{% endblock %}
+
+{%block body %}
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+<div class="container-fluid">
+    <a class="navbar-brand" href="#">Profile</a>
+    <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-10">
+        <li class="nav-item w-50">
+          <form form method="POST" action="{{url_for('createestate_open')}}">
+            <button class="btn btn-primary w-100 py-2" type="submit">Create estate</button>
+          </form>
+        </li>
+        <li class="nav-item w-100">
+          <form form method="POST" action="{{url_for('createadd_open')}}">
+            <button class="btn btn-primary w-100 py-2" type="submit">Create add</button>
+          </form>
+        </li>
+        <li class="nav-item w-100">
+          <form form method="POST" action="{{url_for('updateEstateStatus_open')}}">
+            <button class="btn btn-primary w-100 py-2" type="submit">Update estate</button>
+          </form>
+        </li>
+        </li>
+
+
+
+          <li class="nav-item w-50">
+          </li>
+          <li class="nav-item w-100">
+            <form form method="POST" action="{{url_for('updateaddstatus_open')}}">
+              <button class="btn btn-primary w-100 py-2" type="submit">Update addstatus</button>
+            </form>
+          </li>
+          </li>
+
+          <li class="nav-item w-50">
+            <a class="nav-link" href="#">Update status add</a>
+          </li>
+
+          <li class="nav-item w-40">
+            <form method="POST" action="{{url_for('withdraw_open')}}">
+          </form>
+          </li>
+          <li class="nav-item w-100"></li>
+            <form method="POST" action="{{url_for('buyEstate_open')}}">
+              <button class="btn btn-primary w-100 py-2" type="submit">Balance</button>
+          </form>
+        </li>
+          <li class="nav-item w-50">
+              <p  style="color: red;"> Balance {{balance}}</p>
+          </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{%extends 'base.html'%}
+
+{% block title %}
+    Loginwindow
+{% endblock %}
+
+{%block body %}
+<div class="container">
+    <div class="row">
+        <div class="col" text-center>
+            <form method="POST" action="{{ url_for('login')}}">
+
+                <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+                
+                <div class="form-floating">
+                    <input class="form-control" id="floatingInput" name="login" >
+                    <label for="floatingInput">Your unique ID</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
+                    <label for="floatingPassword">Password</label>
+                </div>
+
+
+                <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+            </form>
+
+            <form action="{{ url_for('register') }}" method="POST">
+                <button class="btn btn-primary w-100 py-2" type="submit" >Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul>
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+{% endblock %}
