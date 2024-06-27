@@ -8,26 +8,23 @@
 <div class="container">
     <div class="row">
         <div class="col" text-center>
-            <form method="POST" action="{{ url_for('login')}}">
+            <form action="{{ url_for('create_add') }}" method="POST">
                 
                 <div class="form-floating">
-                    <input class="form-control" id="floatingInput" name="size" >
+                    <input class="form-control" id="floatingInput" name="price" >
                     <label for="floatingInput">Price </label>
                 </div>
                 <div class="form-floating">
-                    <input type="password" class="form-control" id="floatingPassword" name="memory" placeholder="Password">
+                    <input  class="form-control" id="floatingPassword" name="idad" placeholder="memory">
                     <label for="floatingPassword">id add </label>
                 </div>
 
                 <div class="form-floating">
-                    <input class="form-control" id="floatingInput" name="es_type" >
+                    <input class="form-control" id="floatingInput" name="status" >
                     <label for="floatingInput">status</label>
                 </div>
 
-
-            </form>
-
-            <form action="{{ url_for('create_add') }}" method="POST">
+            
                 <button class="btn btn-primary w-100 py-2" type="submit" >Create add</button>
             </form>
         </div>

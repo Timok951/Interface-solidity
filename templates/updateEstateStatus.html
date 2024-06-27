@@ -8,7 +8,7 @@
 <div class="container">
     <div class="row">
         <div class="col" text-center>
-            <form method="POST" action="{{ url_for('login')}}">
+          <form action="{{ url_for('updateAdStatus') }}" method="POST">
                 
                 <div class="form-floating">
                     <input class="form-control" id="floatingInput" name="idestate" >
@@ -16,15 +16,10 @@
                 </div>
                 <div class="form-floating">
                     <input class="form-control" id="floatingPassword" name="status" placeholder="status">
-                    <label for="floatingPassword">estate status</label>
+                    <label for="floatingPassword">estate status (bool)</label>
                 </div>
 
 
-
-
-            </form>
-
-            <form action="{{ url_for('createEstate') }}" method="POST">
                 <button class="btn btn-primary w-100 py-2" type="submit" >update escate</button>
             </form>
         </div>

@@ -8,7 +8,7 @@
 <div class="container">
     <div class="row">
         <div class="col" text-center>
-            <form method="POST" action="{{ url_for('login')}}">
+            <form method="POST" action="{{ url_for('buyEstate')}}">
                 
                 <div class="form-floating">
                     <input class="form-control" id="floatingInput" name="idad" >
@@ -17,9 +17,7 @@
 
 
 
-            </form>
 
-            <form action="{{ url_for('createEstate') }}" method="POST">
                 <button class="btn btn-primary w-100 py-2" type="submit" >buy add</button>
             </form>
         </div>

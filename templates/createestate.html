@@ -8,15 +8,15 @@
 <div class="container">
     <div class="row">
         <div class="col" text-center>
-            <form method="POST" action="{{ url_for('login')}}">
+            <form action="{{ url_for('createEstate') }}" method="POST">
                 
                 <div class="form-floating">
                     <input class="form-control" id="floatingInput" name="size" >
                     <label for="floatingInput">Size </label>
                 </div>
                 <div class="form-floating">
-                    <input type="password" class="form-control" id="floatingPassword" name="memory" placeholder="Password">
-                    <label for="floatingPassword">Memory</label>
+                    <input class="form-control" id="floatingInput" name="adress">
+                    <label for="floatingInput">adress</label>
                 </div>
 
                 <div class="form-floating">
@@ -24,10 +24,6 @@
                     <label for="floatingInput">estate type</label>
                 </div>
 
-
-            </form>
-
-            <form action="{{ url_for('createEstate') }}" method="POST">
                 <button class="btn btn-primary w-100 py-2" type="submit" >Create escate</button>
             </form>
         </div>

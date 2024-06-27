@@ -3,6 +3,10 @@ from web3.middleware import geth_poa_middleware
 from contract_info import abi, address_contract
 import re
 from flask import Flask, request, render_template, redirect, url_for,flash, session
+import traceback
+
+
+
 
 
 w3 = Web3(Web3.HTTPProvider('http://localhost:8545'))
@@ -18,11 +22,14 @@ app.secret_key = 'super_secret_key'
 def index():
         return render_template("login.html")
 
+account_addresspublic = None
 
 @app.route('/login', methods=['POST'])
 def login():
+    global account_addresspublic
     try:
         account_address = request.form['login']
+        account_addresspublic = account_address
         password = request.form['password']  
         w3.geth.personal.unlock_account(account_address, password)
         session['login'] = account_address
@@ -78,6 +85,7 @@ def passwordCheck(password):
 
 @app.route('/registeraccount', methods=['POST'])
 def registeraccount():
+
     password = request.form['password']
     if passwordCheck(password) == True:
         new_account = w3.geth.personal.new_account(password)
@@ -91,8 +99,8 @@ def registeraccount():
 @app.route('/balanceshow', methods=['POST'])
 def balanceshow(): 
     account_address = session['login']
-    balance = account_address(account_address)
-    return render_template('profile.html', balance=balance)
+    balancecurrent = balance(account_address)
+    return render_template('profile.html', balanceshowingcurrent=balancecurrent)
 
 
 def balance(account_address): 
@@ -107,55 +115,58 @@ def balance(account_address):
 def createestate_open():
     return render_template('createestate.html')
 
-@app.route('/createestateS', methods=['POST'])
-def createEstate(account_address):
+@app.route('/createestate', methods=['POST']) 
+def createEstate():
     try:
-        size = request.form(size)
-        memory = request.form(memory)
-        es_type = request.form(es_type)
-        account_address = session['login']
-        estate = contract.functions.createEstate(size,memory,es_type).transact({'from': account_address})
-        print(f"transaction was send {estate.hex()}")
+        size = request.form['size']
+        adress = request.form['adress']
+        es_type = request.form['es_type']
+        account_address = account_addresspublic
+        estate = contract.functions.createEstate(int(size), adress, int(es_type)).transact({'from': account_address})
+        return render_template('profile.html')  # Добавить эту строку
     except Exception as e:
-        print(e)
-
+        flash(str(e))
+        return render_template('profile.html')
+    
 @app.route('/createadd_open', methods=['POST'])
 def createadd_open():
     return render_template('createadd.html')
 
-
-def create_add(account_address):
+@app.route('/createadd', methods=['POST'])
+def create_add():
     try:
-        price = request.form(price)
-        idad = request.form(idad)
-        adstatus = request.form(adstatus)
-        account_address = session['login']
-        ad = contract.functions.createAd(price, idad,adstatus).transact({'from': account_address})
-        flash(f"add was created {ad.hex()}")
+        price = request.form['price']
+        idad = request.form['idad']
+        adstatus = request.form['status']
+        account_address = account_addresspublic
+        ad = contract.functions.createAd(int(price), int(idad), int(adstatus)).transact({'from': account_address})
+        return render_template('profile.html')  # Добавить эту строку
     except Exception as e:
-        flash(e)
+        flash(str(e))
+        return render_template('profile.html')
+
 
 
 @app.route('/updateEstateStatus_open', methods=['POST'])
-def createadd_open():
+def updateEstateStatus_open():
     return render_template('updateEstateStatus.html')
 
 @app.route('/updateEstateStatus', methods=['POST'])
 def updateEstateStatus():
     try:
-        idestate = request.form(idestate)
-        status = request.form(status)
+        idestate = request.form['idestate']
+        status = request.form['idestate']
 
-        updateEstateStatus = contract.functions.updateEstateStatus(idestate,status).transact()
-        flash(f"estate was update {updateEstateStatus.hex()}")
-
+        updateEstateStatus = contract.functions.updateEstateStatus(int(idestate),bool(status)).transact()
+        return render_template('profile.html')  # Добавить эту строку
     except Exception as e:
-        flash(e)
+        flash(str(e))
+        return render_template('profile.html')
 
 
 
 
-@app.route('updateaddstatus_open', methods=['POST'])
+@app.route('/updateaddstatus_open', methods=['POST'])
 def updateaddstatus_open():
         return render_template('updateaddstatus.html')
 
@@ -163,44 +174,45 @@ def updateaddstatus_open():
 @app.route('/updateAdStatus', methods=['POST'])
 def updateAdStatus(account_address):
     try:
-        idad= request.form(idad)
-        status = request.form(status)
-        account_address = session['login']
-        updateadStatus = contract.functions.updateAdStatus(idad,status).transact({'from': account_address}) 
-        flash(f"add was update {updateadStatus.hex()}")
-
+        idad= request.form['idad']
+        status = request.form['status']
+        account_address = account_addresspublic
+        updateadStatus = contract.functions.updateAdStatus(int(idad),int(status)).transact({'from': account_address}) 
+        return render_template('profile.html')  # Добавить эту строку
     except Exception as e:
-        flash(e)
+        flash(str(e))
+        return render_template('profile.html')
 
+@app.route('/withDraw_open', methods=['POST'])
+def withDraw_open():
+    return render_template('withDraw.html')
 
-@app.route('/withdraw_open', methods=['POST'])
-def withdraw_open():
-    return render_template('withdraw.html')
-
-
+@app.route('/withDraw', methods=['POST'])
 def withDraw(account_address):
     try:
-        amount = request.form(amount)
-        account_address = session['login']
-        withDraw = contract.functions.withDraw(amount).transact({'from': account_address}) 
-        flash(f"withdraw sucess {withDraw.hex()}" )
+        amount = request.form["amount"]
+        account_address = account_addresspublic
+        withDraw = contract.functions.withDraw(int(amount)).transact({'from': account_address}) 
+        return render_template('profile.html')  # Добавить эту строку
     except Exception as e:
-        flash(e)
+        flash(str(e))
+        return render_template('profile.html')
 
 
 @app.route('/buyEstate_open', methods=['POST'])
 def buyEstate_open():
     return render_template('buyestate.html')
 
+@app.route('/buyEstate', methods=['POST'])
 def buyEstate(account_address):
     try:
-        idad = request.form(idad)
-        account_address = session['login']
-        buy = contract.functions.buyEstate(idad).transact({'from': account_address}) 
-        flash(f"buy sucess {buy.hex()}")
-
+        idad = request.form["idad"]
+        account_address = account_addresspublic
+        buy = contract.functions.buyEstate(int(idad)).transact({'from': account_address}) 
+        return render_template('profile.html')  # Добавить эту строку
     except Exception as e:
-        flash(e)
+        flash(str(e))
+        return render_template('profile.html')
 
 @app.errorhandler(404)
 def page_not_found(error):
@@ -209,4 +221,9 @@ def page_not_found(error):
 
 if __name__ == "__main__":
     app.run(debug=True)  
+
+@app.errorhandler(404)
+def page_not_found(error):
+    traceback.print_exc()
+    return render_template('page_not_found.html'), 404
 

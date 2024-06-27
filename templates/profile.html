@@ -42,21 +42,24 @@
           </li>
           </li>
 
-          <li class="nav-item w-50">
-            <a class="nav-link" href="#">Update status add</a>
-          </li>
 
           <li class="nav-item w-40">
-            <form method="POST" action="{{url_for('withdraw_open')}}">
+            <form method="POST" action="{{url_for('withDraw_open')}}">
+              <button class="btn btn-primary w-100 py-2" type="submit">withdraw</button>
           </form>
           </li>
+
           <li class="nav-item w-100"></li>
             <form method="POST" action="{{url_for('buyEstate_open')}}">
-              <button class="btn btn-primary w-100 py-2" type="submit">Balance</button>
+              <button class="btn btn-primary w-100 py-2" type="submit">Buy Estate</button>
           </form>
+
+          <form method="POST" action="{{url_for('balanceshow')}}">
+            <button class="btn btn-primary w-100 py-2" type="submit">balanceshow</button>
+        </form>
         </li>
           <li class="nav-item w-50">
-              <p  style="color: red;"> Balance {{balance}}</p>
+              <p  style="color: red;"> Balance {{balanceshowingcurrent}}</p>
           </li>
       </ul>
     </div>
